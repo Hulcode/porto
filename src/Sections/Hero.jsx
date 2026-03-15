@@ -79,9 +79,11 @@ export default function Hero() {
               JavaScript. I enjoy turning ideas into clean, interactive
               interfaces that provide a smooth user experience.
             </p>
-            <div className="gap-2.5 flex">
+            <div className="">
               <Button size={"lg"}>
-                Contact Me <ArrowRight size={20} />
+                <a href="#contact" className="gap-2.5 flex items-center">
+                  Contact Me <ArrowRight size={20} />
+                </a>
               </Button>
               <AnimatedBorderButton>
                 <a
@@ -128,8 +130,8 @@ export default function Hero() {
               />
 
               <div className="absolute -bottom-5 glass right-0 p-2 rounded-2xl animate-float">
-                <div className="h-2.5 w-2.5 rounded-full bg-red-500 inline-block mr-2 animate-pulse " />
-                <span>Not available for work</span>
+                <div className="h-2.5 w-2.5 rounded-full bg-primary inline-block mr-2 animate-pulse " />
+                <span>Available for work</span>
               </div>
               <div className="absolute -top-10 glass left-0 p-4 rounded-2xl animate-float">
                 <span className=" text-primary block text-3xl font-bold">

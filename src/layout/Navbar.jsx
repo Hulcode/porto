@@ -44,7 +44,10 @@ export default function Navbar() {
           })}
         </div>
         <div className="md:block hidden">
-          <Button size={"sm"}>Contact Me</Button>
+          <Button size={"sm"}>
+            {" "}
+            <a href="#contact"> Contact Me</a>
+          </Button>
         </div>
         <button
           onClick={() => {

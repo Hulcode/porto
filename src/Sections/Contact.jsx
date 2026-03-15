@@ -81,7 +81,7 @@ export default function Contact() {
     }
   };
   return (
-    <section className="container mx-auto py-20 px-6">
+    <section id="contact" className="container mx-auto py-20 px-6">
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
@@ -194,7 +194,7 @@ export default function Contact() {
           </form>
         </div>
         <div className="space-y-6 animate-fade-in animation-delay-400">
-          <div className="glass rounded-3xl p-8">
+          <div className="glass rounded-3xl p-4">
             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-4">
               {contactInfo.map((item, i) => (
@@ -210,7 +210,7 @@ export default function Contact() {
                     <div className="text-sm text-muted-foreground">
                       {item.label}
                     </div>
-                    <div className="font-medium">{item.value}</div>
+                    <div className="font-medium ">{item.value}</div>
                   </div>
                 </a>
               ))}
