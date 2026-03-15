@@ -1,4 +1,4 @@
-import TypeScript from "../assets/type-script.avif";
+import TypeScript from "../assets/type-script.jpg";
 import Nodejs from "../assets/Screenshot 2026-03-14 221438.png";
 import ShadCNUI from "../assets/hqdefault.jpg";
 import TanStackQuery from "../assets/Screenshot 2026-03-14 222001.png";
