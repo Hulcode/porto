@@ -81,7 +81,7 @@ export default function Contact() {
     }
   };
   return (
-    <section className="container mx-auto py-20 ">
+    <section className="container mx-auto py-20 px-6">
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
@@ -224,9 +224,9 @@ export default function Contact() {
               <span className="font-medium">Currently Available</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              I'm currently open to new opportunities and exciting projects.
-              Whether you need a full-time engineer or a freelance consultant,
-              let's talk!
+              I'm currently open to new opportunities and exciting projects. If
+              you're looking for a frontend developer to build modern and
+              high-performance web applications, let's connect.
             </p>
           </div>
         </div>
