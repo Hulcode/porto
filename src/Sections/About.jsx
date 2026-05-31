@@ -43,27 +43,26 @@ export default function About() {
         </h2>
         <div className="space-y-4 text-muted-foreground animate-fade-in animation-delay-200">
           <p>
-            I’m a frontend developer (currently) focused on building modern,
-            responsive, and user-friendly web applications using React and
-            JavaScript. I enjoy turning ideas into clean, interactive interfaces
-            that provide a smooth user experience.
+            I’m a Full-Stack Developer with experience building both desktop and
+            web applications. My core technologies include C#, JavaScript,
+            Node.js, Express.js, MongoDB, and React. I enjoy developing
+            solutions that address real-world problems and continuously
+            improving my skills through hands-on projects and practical
+            experience.
           </p>
+
           <p>
-            My background in desktop development with C# helped me build a
-            strong foundation in problem-solving and object-oriented
-            programming, which I now apply to frontend development to write
-            clean, maintainable code.
+            Currently, I’m focused on strengthening my full-stack development
+            expertise by building real-world applications and exploring modern
+            frameworks and tools such as Next.js and NestJS. I aim to deepen my
+            understanding of scalable architecture and best practices in
+            software development.
           </p>
-          <p>
-            {" "}
-            Currently, I’m focused on improving my skills in frontend
-            architecture, performance optimization, and building real-world
-            projects that reflect best practices.
-          </p>
+
           <p>
             I’m always open to learning new technologies, collaborating with
-            others, and taking on projects that challenge me to grow as a
-            developer.
+            other developers, and taking on challenging projects that help me
+            grow as a software engineer.
           </p>
         </div>
         <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
