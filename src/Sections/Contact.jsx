@@ -224,9 +224,14 @@ export default function Contact() {
               <span className="font-medium">Currently Available</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              I'm currently open to new opportunities and exciting projects. If
-              you're looking for a frontend developer to build modern and
-              high-performance web applications, let's connect.
+              I'm currently open to new opportunities and exciting projects. As
+              a Full-Stack Developer, I enjoy building modern, scalable, and
+              high-performance web applications that deliver real value to
+              users. I'm always eager to collaborate with teams, contribute to
+              meaningful projects, and continue growing my skills through new
+              challenges. If you're looking for a developer who is passionate
+              about learning and creating quality software, I'd be happy to
+              connect.
             </p>
           </div>
         </div>

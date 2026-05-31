@@ -1,12 +1,30 @@
 const experiences = [
   {
+    period: "2026 — Present",
+    role: "Full-Stack Developer",
+    company: "Self-Learning",
+    description:
+      "Building full-stack web applications using React, Node.js, Express.js, and MongoDB. Working on real-world projects, implementing REST APIs, authentication systems, and modern web development practices while expanding expertise in Next.js and NestJS.",
+    technologies: [
+      "React",
+      "JavaScript",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Next.js",
+      "NestJS",
+      "Git",
+    ],
+    current: true,
+  },
+  {
     period: "2025 — Present",
     role: "Frontend Developer (Learning & Building Projects)",
     company: "Self-Learning",
     description:
       "Focused on building modern frontend applications using React and JavaScript. Developing responsive interfaces, improving UI/UX skills, and working on personal projects to strengthen real-world development experience.",
     technologies: ["React", "JavaScript", "HTML", "CSS", "Tailwind"],
-    current: true,
+    current: false,
   },
   {
     period: "2024 — 2025",
