@@ -9,7 +9,7 @@ import CurrentlyLearning from "./Sections/CurrentlyLearning";
 
 function App() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen  overflow-x-hidden">
       <Navbar />
       <main>
         <Hero />

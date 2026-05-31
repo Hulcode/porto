@@ -28,7 +28,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className=" container max-w-5xl mx-auto py-20  relative overflow-hidden px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+      className=" container max-w-6xl mx-auto py-20  relative overflow-hidden px-3 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
     >
       {/* left */}
       <div className="space-y-8 animate-fade-in animation-delay-100">

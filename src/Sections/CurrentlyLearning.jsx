@@ -39,7 +39,10 @@ const learning = [
 ];
 export default function CurrentlyLearning() {
   return (
-    <section className=" container max-w-5xl mx-auto py-20 px-6 text-center">
+    <section
+      id="currentlylearning"
+      className=" container max-w-6xl mx-auto py-20 px-3 text-center"
+    >
       <span className="text-secondary-foreground text-sm font-md tracking-wider animate-fade-in ">
         Featured Work
       </span>

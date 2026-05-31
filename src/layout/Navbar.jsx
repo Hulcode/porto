@@ -5,7 +5,7 @@ const navLinks = [
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
-  { href: "#testimonials", label: "Testimonials" },
+  { href: "#currentlylearning", label: "Currently Learning" },
 ];
 export default function Navbar() {
   const [inMobile, setInMobile] = useState(false);
@@ -26,7 +26,7 @@ export default function Navbar() {
       >
         <a
           href="#"
-          className="text-xl text-foreground font-bold tracking-tight hover:text-primary "
+          className="text-2xl text-foreground font-bold tracking-tight hover:text-primary "
         >
           Al-Hassan<span className="text-primary"> Soliman</span>
         </a>
@@ -36,7 +36,7 @@ export default function Navbar() {
               <a
                 key={key}
                 href={link.href}
-                className="px-4 text-sm  py-2 text-muted-foreground  hover:text-foreground rounded-full hover:bg-surface "
+                className="px-4   py-2 text-muted-foreground  hover:text-foreground rounded-full hover:bg-surface "
               >
                 {link.label}
               </a>
@@ -46,7 +46,10 @@ export default function Navbar() {
         <div className="md:block hidden">
           <Button size={"sm"}>
             {" "}
-            <a href="#contact"> Contact Me</a>
+            <a href="#contact" className="text-lg">
+              {" "}
+              Contact Me
+            </a>
           </Button>
         </div>
         <button

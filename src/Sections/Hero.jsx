@@ -6,18 +6,19 @@ import profilePhoto from "../assets/image.png";
 import { useMemo } from "react";
 
 const skills = [
-  "React",
   "JavaScript",
+  "React",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
   "C#",
   "C++",
   "SQL",
-  "Sass",
-
+  "HTML",
+  "CSS",
   "Tailwind CSS",
-
-  "Jest",
-
-  "GitHub Actions",
+  "Git",
+  "GitHub",
 ];
 export default function Hero() {
   const stars = useMemo(() => {
@@ -74,10 +75,17 @@ export default function Hero() {
               </span>
             </h1>
             <p className=" text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-              I’m a frontend developer (currently) focused on building modern,
-              responsive, and user-friendly web applications using React and
-              JavaScript. I enjoy turning ideas into clean, interactive
-              interfaces that provide a smooth user experience.
+              I'm a Full-Stack Developer with experience building desktop and
+              web applications. My primary technologies include C#, JavaScript,
+              Node.js, Express.js, MongoDB, and React. I enjoy building
+              applications that solve real problems and continuously improving
+              my skills through hands-on projects and practical learning.
+              Currently, I'm focused on expanding my full-stack development
+              expertise, building real-world applications, and exploring modern
+              technologies such as Next.js and NestJS. I'm always interested in
+              learning new technologies, collaborating with other developers,
+              and taking on challenges that help me grow as a software
+              developer.
             </p>
             <div className="">
               <Button size={"lg"}>

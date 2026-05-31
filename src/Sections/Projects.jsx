@@ -1,28 +1,28 @@
 import sudoco from "../assets/Screenshot 2026-03-10 162834.png";
-import pray from "../assets/Screenshot 2026-03-10 164138.png";
+import YouTube from "../assets/1774892716080.jpg";
 import protofolio from "../assets/Screenshot 2026-03-13 213953.png";
 import { AnimatedBorderButton } from "../componantes/AnimatedButton";
-import weather from "../assets/1772483995753.jfif";
+import Crypto from "../assets/1775655862638.jpg";
 import { ArrowUpRight, Github } from "lucide-react";
 
 const projects = [
   {
-    title: "Weather",
+    title: "Crypto App",
     description:
-      "A responsive web application that displays real-time weather information for different cities. The app fetches live weather data from an external API and presents temperature, conditions, and other details through a clean and user-friendly interface.",
-    image: weather,
-    tags: ["React", "JavaScript", "Weather API"],
-    link: "https://imaginative-kulfi-e9e769.netlify.app/",
-    github: "https://github.com/Hulcode/weather",
+      "A responsive cryptocurrency tracking application built with React. The app fetches real-time market data from an external API, allowing users to view cryptocurrency prices, market trends, and detailed information through a clean and user-friendly interface.",
+    image: Crypto,
+    tags: ["React", "JavaScript", "API Integration"],
+    link: "https://creptohv.netlify.app/",
+    github: "https://github.com/Hulcode/crepto",
   },
   {
-    title: "Prayer Times App",
+    title: "YouTube Clone",
     description:
-      "A web application that displays daily Islamic prayer times based on the selected city. The project fetches real-time data from an external API and presents it in a clean, user-friendly interface.",
-    image: pray,
-    tags: ["React", "API Integration", "JavaScript", "CSS"],
-    link: "https://hulcode-prayes-time.netlify.app/",
-    github: "https://github.com/Hulcode/prayTime",
+      "A responsive YouTube-inspired web application built with React. The project integrates with a video API to display videos, search content, browse channels, and provide a familiar user experience similar to the YouTube platform.",
+    image: YouTube,
+    tags: ["React", "JavaScript", "API Integration", "CSS"],
+    link: "https://jazzy-queijadas-38d880.netlify.app/",
+    github: "https://github.com/Hulcode/youtube-clone",
   },
   {
     title: "Sudoku Game",
@@ -48,7 +48,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className=" container max-w-5xl mx-auto py-20  relative overflow-hidden px-6 items-center"
+      className=" container max-w-6xl mx-auto py-20  relative overflow-hidden px-3 items-center"
     >
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />

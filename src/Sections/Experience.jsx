@@ -36,7 +36,7 @@ export default function Experience() {
        h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2"
       />
 
-      <div className="container mx-auto max-w-5xl px-6 relative z-10">
+      <div className="container mx-auto max-w-6xl px-3 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <span
