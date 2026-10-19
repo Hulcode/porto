@@ -1,5 +1,6 @@
 import About from "../Sections/About";
 import Contact from "../Sections/Contact";
+
 import Experience from "../Sections/Experience";
 import Hero from "../Sections/Hero";
 import Projects from "../Sections/Projects";
@@ -12,6 +13,7 @@ export default async function Portfolio() {
       <main>
         <Hero content={content.hero} />
         <About content={content.about} />
+
         <Projects content={content.projects} />
         <Experience content={content.experience} />
         <CurrentlyLearning content={content.learning} />

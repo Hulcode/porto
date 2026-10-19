@@ -91,6 +91,12 @@ export default function Hero({ content }) {
                 />
               </a>
               <a
+                href="home/cv"
+                className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
+              >
+                View CV
+              </a>
+              <a
                 href="#contact"
                 className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
               >
