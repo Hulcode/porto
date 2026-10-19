@@ -1,17 +1,103 @@
-import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
+
 import Aurora from "../components/Aurora";
+import SplitText from "../components/SplitText";
+import DecryptedText from "../components/DecryptedText";
+import BlurText from "../components/BlurText";
+import Magnet from "../components/Magnet";
+import StarBorder from "../components/StarBorder";
+import ShinyText from "../components/ShinyText";
+import SpotlightCard from "../components/SpotlightCard";
+import CountUp from "../components/CountUp";
+import LogoLoop from "../components/LogoLoop";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
+const ghostButton = `inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`;
+
+const pill =
+  "rounded-full border border-white/10 px-3 py-1 text-xs text-foreground/80 sm:text-sm";
+
+const descriptionClass =
+  "mt-7 max-w-[34rem] text-pretty text-base leading-relaxed text-muted-foreground md:text-lg md:leading-8";
+
+/** JS-driven effects (GSAP, motion, rAF) can't use Tailwind's motion-safe:, so gate them here. */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
 export default function Hero({ content }) {
+  const reduced = usePrefersReducedMotion();
+
   const socials = [
     { icon: Github, href: content.githubUrl, label: "GitHub" },
     { icon: Linkedin, href: content.linkedinUrl, label: "LinkedIn" },
   ].filter((social) => social.href);
 
   const skills = content.skills ?? [];
+  const skillLogos = useMemo(
+    () =>
+      skills.map((skill) => ({
+        title: skill,
+        node: <span className={pill}>{skill}</span>,
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [content.skills],
+  );
+
+  // Replaces the old "test" placeholder. Add `focusSentence` to your content, or edit the fallback.
+
+  // "6+" -> number 6, suffix "+", so CountUp has something numeric to animate.
+  const yearsRaw = String(content.yearsExperience ?? "");
+  const yearsNumber = parseInt(yearsRaw, 10);
+  const yearsSuffix = yearsRaw.replace(/^\d+/, "");
+  const hasYearsNumber = Number.isFinite(yearsNumber);
+
+  const primaryCta = (
+    <a
+      href="#projects"
+      className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] ${focusRing}`}
+    >
+      View projects
+      <ArrowRight
+        aria-hidden="true"
+        className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
+      />
+    </a>
+  );
+
+  const contactCta = reduced ? (
+    <a href="#contact" className={ghostButton}>
+      Get in touch
+    </a>
+  ) : (
+    <StarBorder
+      as="a"
+      href="#contact"
+      color="#4ef2d2"
+      speed="7s"
+      thickness={1}
+      className={`rounded-full ${focusRing}`}
+    >
+      Get in touch
+    </StarBorder>
+  );
 
   return (
     <section
@@ -60,14 +146,47 @@ export default function Hero({ content }) {
 
             <h1
               id="hero-heading"
-              className="mt-6 text-balance text-[clamp(2.75rem,6.4vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.05em] motion-safe:animate-fade-in animation-delay-100"
+              className="mt-6 text-balance text-[clamp(2.75rem,6.4vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.05em]"
             >
-              {/* NOTE: the trailing "s" is hard-coded; remove it if it's a typo */}
-              <span className="block">{content.titleLead}</span>
-              <span className="text-gradient block pb-[0.08em]">
-                {content.titleAccent}
+              {/* Line 1: chars rise in. Wrapper span keeps it a block; pb stops SplitText's overflow-hidden clipping descenders. */}
+              <span className="block">
+                {reduced ? (
+                  content.titleLead
+                ) : (
+                  <SplitText
+                    text={content.titleLead}
+                    tag="span"
+                    className="pb-[0.12em]"
+                    splitType="chars"
+                    delay={28}
+                    duration={0.9}
+                    ease="power3.out"
+                    from={{ opacity: 0, y: 36 }}
+                    to={{ opacity: 1, y: 0 }}
+                    threshold={0.1}
+                    rootMargin="0px"
+                    textAlign="left"
+                  />
+                )}
               </span>
-              <span className="mt-3 block text-[0.4em] font-medium leading-snug tracking-[-0.02em] text-foreground/75">
+
+              {/* Line 2: scrambles into place, left to right, keeping your gradient */}
+              <span className="block pb-[0.08em]">
+                {reduced ? (
+                  <span className="text-gradient">{content.titleAccent}</span>
+                ) : (
+                  <DecryptedText
+                    text={content.titleAccent}
+                    animateOn="view"
+                    sequential
+                    revealDirection="start"
+                    speed={55}
+                    parentClassName="text-gradient"
+                  />
+                )}
+              </span>
+
+              <span className="mt-3 block text-[0.4em] font-medium leading-snug tracking-[-0.02em] text-foreground/75 motion-safe:animate-fade-in animation-delay-300">
                 {content.titleSupporting}{" "}
                 <em className="font-serif text-[1.15em] font-normal italic text-foreground">
                   {content.titleEmphasis}
@@ -75,33 +194,30 @@ export default function Hero({ content }) {
               </span>
             </h1>
 
-            <p className="mt-7 max-w-[34rem] text-pretty text-base leading-relaxed text-muted-foreground motion-safe:animate-fade-in animation-delay-200 md:text-lg md:leading-8">
-              {content.description}
-            </p>
+            {reduced ? (
+              <p className={descriptionClass}>{content.description}</p>
+            ) : (
+              <BlurText
+                text={content.description}
+                animateBy="words"
+                direction="top"
+                delay={40}
+                className={descriptionClass}
+              />
+            )}
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#projects"
-                className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] motion-safe:hover:-translate-y-0.5 ${focusRing}`}
-              >
-                View projects
-                <ArrowRight
-                  aria-hidden="true"
-                  className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
-                />
-              </a>
-              <a
-                href="home/cv"
-                className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
-              >
+              {reduced ? (
+                primaryCta
+              ) : (
+                <Magnet padding={50} magnetStrength={5}>
+                  {primaryCta}
+                </Magnet>
+              )}
+              <Link href="/home/cv" className={ghostButton}>
                 View CV
-              </a>
-              <a
-                href="#contact"
-                className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
-              >
-                Get in touch
-              </a>
+              </Link>
+              {contactCta}
             </div>
 
             {socials.length > 0 && (
@@ -171,35 +287,63 @@ export default function Hero({ content }) {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                Available for work
+                {reduced ? (
+                  "Available for work"
+                ) : (
+                  <ShinyText text="Available for work" speed={3} />
+                )}
               </div>
             </div>
 
-            <div className="absolute -left-2 top-[18%] rounded-2xl border border-white/10 bg-background/80 px-4 py-3 shadow-xl backdrop-blur-xl sm:-left-8">
-              <span className="text-gradient block text-3xl font-semibold leading-none tracking-tight">
-                {content.yearsExperience}
-              </span>
-              <span className="mt-1.5 block text-xs text-muted-foreground">
-                Years building
-              </span>
+            {/* Years badge: spotlight follows the cursor, number counts up on view */}
+            <div className="absolute -left-2 top-[18%] sm:-left-8">
+              <SpotlightCard
+                spotlightColor="rgba(78, 242, 210, 0.22)"
+                className="!rounded-2xl !border-white/10 !bg-background/80 !px-4 !py-3 shadow-xl backdrop-blur-xl"
+              >
+                <span className="text-gradient block text-3xl font-semibold leading-none tracking-tight">
+                  {hasYearsNumber && !reduced ? (
+                    <CountUp from={0} to={yearsNumber} duration={2} />
+                  ) : hasYearsNumber ? (
+                    yearsNumber
+                  ) : null}
+                  {hasYearsNumber ? yearsSuffix : content.yearsExperience}
+                </span>
+                <span className="mt-1.5 block text-xs text-muted-foreground">
+                  Years building
+                </span>
+              </SpotlightCard>
             </div>
           </div>
         </div>
 
-        {/* Stack */}
+        {/* Stack: infinite marquee, falls back to the static list for reduced motion */}
         {skills.length > 0 && (
           <div className="mt-16 flex flex-col gap-4 border-t border-white/[0.08] pt-6 md:flex-row md:items-center md:gap-8 lg:mt-20">
             <p className="shrink-0 text-sm text-muted-foreground">Core stack</p>
-            <ul className="flex flex-1 flex-wrap gap-2">
-              {skills.map((skill, index) => (
-                <li
-                  key={`${skill}-${index}`}
-                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-foreground/80 sm:text-sm"
-                >
-                  {skill}
-                </li>
-              ))}
-            </ul>
+            <div className="min-w-0 flex-1">
+              {reduced ? (
+                <ul className="flex flex-wrap gap-2">
+                  {skills.map((skill, index) => (
+                    <li key={`${skill}-${index}`} className={pill}>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <LogoLoop
+                  logos={skillLogos}
+                  speed={40}
+                  direction="left"
+                  logoHeight={32}
+                  gap={12}
+                  pauseOnHover
+                  fadeOut
+                  fadeOutColor="rgb(var(--color-background))"
+                  ariaLabel="Core stack"
+                />
+              )}
+            </div>
             <a
               href="#about"
               aria-label="Scroll to About section"

@@ -1,0 +1,34 @@
+.true-focus {
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: 0.4em;
+  row-gap: 0.15em;
+}
+
+.true-focus__word {
+  position: relative;
+  display: inline-block;
+  transition:
+    filter var(--true-focus-duration) ease,
+    color var(--true-focus-duration) ease;
+}
+
+.true-focus__word--blurred {
+  filter: blur(var(--true-focus-blur));
+}
+
+.true-focus__word--active::after {
+  position: absolute;
+  inset: -0.2em -0.28em;
+  border: 1px solid color-mix(in srgb, var(--true-focus-border) 65%, transparent);
+  border-radius: 0.35em;
+  box-shadow: 0 0 12px var(--true-focus-glow);
+  content: "";
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .true-focus__word {
+    transition: none;
+  }
+}
