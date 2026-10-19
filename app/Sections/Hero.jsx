@@ -1,7 +1,6 @@
 import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Aurora from "../components/Aurora";
-import TrueFocus from "../components/TrueFocus";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -58,18 +57,6 @@ export default function Hero({ content }) {
               <span className="h-px w-8 bg-primary/60" aria-hidden="true" />
               {content.role}
             </p>
-
-            <div className="mt-3 text-sm text-primary sm:text-base">
-              <TrueFocus
-                sentence={"test"}
-                blurAmount={3}
-                borderColor="#4ef2d2"
-                glowColor="rgb(78 242 210 / 30%)"
-                animationDuration={0.5}
-                pauseBetweenAnimations={1}
-              />
-              <span className="sr-only"> {"test"}</span>
-            </div>
 
             <h1
               id="hero-heading"
