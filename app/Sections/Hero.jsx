@@ -1,63 +1,18 @@
-"use client";
-
-import { useSyncExternalStore } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
-
+import Image from "next/image";
 import Aurora from "../components/Aurora";
-import SplitText from "../components/SplitText";
-import DecryptedText from "../components/DecryptedText";
-import CountUp from "../components/CountUp";
-import Magnet from "../components/Magnet";
-import ShinyText from "../components/ShinyText";
+import TrueFocus from "../components/TrueFocus";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-const ghostButton = `inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`;
-
-const pill =
-  "rounded-full border border-white/10 px-3 py-1 text-xs text-foreground/80 sm:text-sm";
-
-const descriptionClass =
-  "mt-7 max-w-[34rem] text-pretty text-base leading-relaxed text-muted-foreground md:text-lg md:leading-8";
-
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-function subscribeToReducedMotion(callback) {
-  const query = window.matchMedia(REDUCED_MOTION_QUERY);
-  query.addEventListener("change", callback);
-  return () => query.removeEventListener("change", callback);
-}
-
-/**
- * JS-driven effects (GSAP, motion, rAF) can't use Tailwind's motion-safe:, so gate them here.
- * useSyncExternalStore avoids setState-in-effect and renders the motion version on the server.
- */
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribeToReducedMotion,
-    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
-    () => false,
-  );
-}
-
 export default function Hero({ content }) {
-  const reduced = usePrefersReducedMotion();
-
   const socials = [
     { icon: Github, href: content.githubUrl, label: "GitHub" },
     { icon: Linkedin, href: content.linkedinUrl, label: "LinkedIn" },
   ].filter((social) => social.href);
 
   const skills = content.skills ?? [];
-
-  // "6+" -> number 6, suffix "+", so CountUp has something numeric to animate.
-  const yearsRaw = String(content.yearsExperience ?? "");
-  const yearsNumber = parseInt(yearsRaw, 10);
-  const yearsSuffix = yearsRaw.replace(/^\d+/, "");
-  const hasYearsNumber = Number.isFinite(yearsNumber);
 
   return (
     <section
@@ -104,49 +59,28 @@ export default function Hero({ content }) {
               {content.role}
             </p>
 
+            <div className="mt-3 text-sm text-primary sm:text-base">
+              <TrueFocus
+                sentence={"test"}
+                blurAmount={3}
+                borderColor="#4ef2d2"
+                glowColor="rgb(78 242 210 / 30%)"
+                animationDuration={0.5}
+                pauseBetweenAnimations={1}
+              />
+              <span className="sr-only"> {"test"}</span>
+            </div>
+
             <h1
               id="hero-heading"
-              className="mt-6 text-balance text-[clamp(2.75rem,6.4vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.05em]"
+              className="mt-6 text-balance text-[clamp(2.75rem,6.4vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.05em] motion-safe:animate-fade-in animation-delay-100"
             >
-              {/* Line 1: chars rise in. The wrapper span keeps it a block; pb stops SplitText's overflow-hidden clipping descenders. */}
-              <span className="block">
-                {reduced ? (
-                  content.titleLead
-                ) : (
-                  <SplitText
-                    text={content.titleLead}
-                    tag="span"
-                    className="pb-[0.12em]"
-                    splitType="chars"
-                    delay={28}
-                    duration={0.9}
-                    ease="power3.out"
-                    from={{ opacity: 0, y: 36 }}
-                    to={{ opacity: 1, y: 0 }}
-                    threshold={0.1}
-                    rootMargin="0px"
-                    textAlign="left"
-                  />
-                )}
+              {/* NOTE: the trailing "s" is hard-coded; remove it if it's a typo */}
+              <span className="block">{content.titleLead}</span>
+              <span className="text-gradient block pb-[0.08em]">
+                {content.titleAccent}
               </span>
-
-              {/* Line 2: scrambles into place, left to right, keeping the gradient */}
-              <span className="block pb-[0.08em]">
-                {reduced ? (
-                  <span className="text-gradient">{content.titleAccent}</span>
-                ) : (
-                  <DecryptedText
-                    text={content.titleAccent}
-                    animateOn="view"
-                    sequential
-                    revealDirection="start"
-                    speed={55}
-                    parentClassName="text-gradient"
-                  />
-                )}
-              </span>
-
-              <span className="mt-3 block text-[0.4em] font-medium leading-snug tracking-[-0.02em] text-foreground/75 motion-safe:animate-fade-in animation-delay-300">
+              <span className="mt-3 block text-[0.4em] font-medium leading-snug tracking-[-0.02em] text-foreground/75">
                 {content.titleSupporting}{" "}
                 <em className="font-serif text-[1.15em] font-normal italic text-foreground">
                   {content.titleEmphasis}
@@ -154,25 +88,31 @@ export default function Hero({ content }) {
               </span>
             </h1>
 
-            <p className={descriptionClass}>{content.description}</p>
+            <p className="mt-7 max-w-[34rem] text-pretty text-base leading-relaxed text-muted-foreground motion-safe:animate-fade-in animation-delay-200 md:text-lg md:leading-8">
+              {content.description}
+            </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Magnet strength={0.25}>
-                <a
-                  href="#projects"
-                  className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] ${focusRing}`}
-                >
-                  View projects
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
-                  />
-                </a>
-              </Magnet>
-              <Link href="/home/cv" className={ghostButton}>
+              <a
+                href="#projects"
+                className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] motion-safe:hover:-translate-y-0.5 ${focusRing}`}
+              >
+                View projects
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
+                />
+              </a>
+              <a
+                href="home/cv"
+                className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
+              >
                 View CV
-              </Link>
-              <a href="#contact" className={ghostButton}>
+              </a>
+              <a
+                href="#contact"
+                className={`inline-flex items-center rounded-full border border-white/15 px-6 py-3.5 font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/[0.06] ${focusRing}`}
+              >
                 Get in touch
               </a>
             </div>
@@ -244,18 +184,13 @@ export default function Hero({ content }) {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                <ShinyText text="Available for work" speed={4} />
+                Available for work
               </div>
             </div>
 
-            <div className="cyber-panel absolute -left-2 top-[18%] rounded-2xl !bg-background/80 px-4 py-3 shadow-xl backdrop-blur-xl sm:-left-8">
+            <div className="absolute -left-2 top-[18%] rounded-2xl border border-white/10 bg-background/80 px-4 py-3 shadow-xl backdrop-blur-xl sm:-left-8">
               <span className="text-gradient block text-3xl font-semibold leading-none tracking-tight">
-                {hasYearsNumber ? (
-                  <CountUp from={0} to={yearsNumber} duration={2} />
-                ) : (
-                  content.yearsExperience
-                )}
-                {hasYearsNumber && yearsSuffix}
+                {content.yearsExperience}
               </span>
               <span className="mt-1.5 block text-xs text-muted-foreground">
                 Years building
@@ -270,7 +205,10 @@ export default function Hero({ content }) {
             <p className="shrink-0 text-sm text-muted-foreground">Core stack</p>
             <ul className="flex flex-1 flex-wrap gap-2">
               {skills.map((skill, index) => (
-                <li key={`${skill}-${index}`} className={pill}>
+                <li
+                  key={`${skill}-${index}`}
+                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-foreground/80 sm:text-sm"
+                >
                   {skill}
                 </li>
               ))}
