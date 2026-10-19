@@ -87,7 +87,6 @@ const SpotlightCard = ({
     grain: clamp(grain, 0, 1),
   };
   const settingsRef = useRef(settings);
-  // eslint-disable-next-line react-hooks/refs
   settingsRef.current = settings;
 
   useEffect(() => {

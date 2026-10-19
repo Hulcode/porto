@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-/* eslint-disable react-hooks/refs */
 "use client";
 
 import { motion, MotionConfig } from "motion/react";
@@ -268,7 +266,7 @@ const BlurText = ({
   const [focusWord, setFocusWord] = useState(-1);
   const settledRef = useRef(phase === "rest");
   const completeRef = useRef(onAnimationComplete);
-  // eslint-disable-next-line react-hooks/refs
+
   completeRef.current = onAnimationComplete;
 
   const fx = useMemo(
@@ -502,9 +500,8 @@ const BlurText = ({
         onPointerEnter={trigger === "hover" ? handleEnter : undefined}
         onClick={trigger === "click" ? replay : undefined}
       >
-        // eslint-disable-next-line react/jsx-no-comment-textnodes
         <span style={SR_ONLY}>{text}</span>
-        // eslint-disable-next-line react-hooks/refs, react-hooks/refs
+
         {groups.map((indices, w) => (
           <span
             key={`word-${w}`}

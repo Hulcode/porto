@@ -184,7 +184,6 @@ const StarBorder = ({
     clickPulse,
   };
   const settingsRef = useRef(settings);
-  // eslint-disable-next-line react-hooks/refs
   settingsRef.current = settings;
 
   useEffect(() => {

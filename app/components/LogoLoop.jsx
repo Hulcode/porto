@@ -1055,7 +1055,7 @@ export const LogoLoop = memo(
 
     const vertical = direction === "up" || direction === "down";
     const config = useRef(null);
-    // eslint-disable-next-line react-hooks/refs
+
     config.current = {
       speed,
       dirSign: (vertical ? direction === "up" : direction !== "right") ? 1 : -1,
@@ -1142,7 +1142,6 @@ export const LogoLoop = memo(
                     {item.node}
                   </span>
                 ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={item.src}
                     srcSet={item.srcSet}

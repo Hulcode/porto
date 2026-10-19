@@ -94,7 +94,6 @@ const ShinyText = ({
   const syncRef = useRef(null);
   const content = children ?? text;
 
-  // eslint-disable-next-line react-hooks/refs
   settingsRef.current = {
     color,
     shineColor,
