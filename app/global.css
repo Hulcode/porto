@@ -21,7 +21,8 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
-    scrollbar-color: rgb(var(--color-primary) / 35%) rgb(var(--color-background));
+    scrollbar-color: rgb(var(--color-primary) / 35%)
+      rgb(var(--color-background));
     scrollbar-width: thin;
   }
 
@@ -47,11 +48,23 @@
     pointer-events: none;
     inset: 0;
     background-image:
-      radial-gradient(ellipse at 14% 0%, rgb(var(--color-primary) / 11%), transparent 34%),
-      radial-gradient(ellipse at 88% 32%, rgb(var(--color-highlight) / 9%), transparent 38%),
+      radial-gradient(
+        ellipse at 14% 0%,
+        rgb(var(--color-primary) / 11%),
+        transparent 34%
+      ),
+      radial-gradient(
+        ellipse at 88% 32%,
+        rgb(var(--color-highlight) / 9%),
+        transparent 38%
+      ),
       linear-gradient(rgb(255 255 255 / 2.2%) 1px, transparent 1px),
       linear-gradient(90deg, rgb(255 255 255 / 2.2%) 1px, transparent 1px);
-    background-size: auto, auto, 80px 80px, 80px 80px;
+    background-size:
+      auto,
+      auto,
+      80px 80px,
+      80px 80px;
     mask-image: linear-gradient(to bottom, black, transparent 78%);
     content: "";
   }
@@ -118,8 +131,16 @@
     height: 110rem;
     border-radius: 9999px;
     background:
-      radial-gradient(ellipse at 24% 18%, rgb(var(--color-primary) / 5%), transparent 36%),
-      radial-gradient(ellipse at 76% 48%, rgb(var(--color-highlight) / 4%), transparent 40%);
+      radial-gradient(
+        ellipse at 24% 18%,
+        rgb(var(--color-primary) / 5%),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 76% 48%,
+        rgb(var(--color-highlight) / 4%),
+        transparent 40%
+      );
     filter: blur(80px);
     transform: translateX(-50%);
     pointer-events: none;
@@ -136,7 +157,14 @@
     left: 50%;
     width: min(84vw, 68rem);
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 9%), rgb(var(--color-primary) / 20%), rgb(255 255 255 / 9%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 9%),
+      rgb(var(--color-primary) / 20%),
+      rgb(255 255 255 / 9%),
+      transparent
+    );
     transform: translateX(-50%);
     content: "";
   }
@@ -164,7 +192,11 @@
     position: relative;
     isolation: isolate;
     background:
-      radial-gradient(ellipse at 0% 0%, rgb(var(--color-primary) / 6%), transparent 48%),
+      radial-gradient(
+        ellipse at 0% 0%,
+        rgb(var(--color-primary) / 6%),
+        transparent 48%
+      ),
       linear-gradient(145deg, rgb(255 255 255 / 5%), transparent 42%),
       rgb(var(--color-card) / 82%);
     border: 1px solid rgb(255 255 255 / 10%);
@@ -241,7 +273,11 @@
     right: 0;
     left: 0;
     height: 25%;
-    background: linear-gradient(transparent, rgb(var(--color-primary) / 8%), transparent);
+    background: linear-gradient(
+      transparent,
+      rgb(var(--color-primary) / 8%),
+      transparent
+    );
     animation: scanline 7s linear infinite;
     content: "";
   }
@@ -254,7 +290,11 @@
 
   .nav-glass {
     border: 1px solid rgb(255 255 255 / 11%);
-    background: linear-gradient(135deg, rgb(16 24 33 / 88%), rgb(7 11 18 / 82%));
+    background: linear-gradient(
+      135deg,
+      rgb(16 24 33 / 88%),
+      rgb(7 11 18 / 82%)
+    );
     box-shadow:
       0 18px 55px rgb(0 0 0 / 35%),
       inset 0 1px rgb(255 255 255 / 7%);
@@ -263,7 +303,11 @@
 
   .project-archive {
     background:
-      radial-gradient(ellipse at 10% 0%, rgb(var(--color-primary) / 8%), transparent 46%),
+      radial-gradient(
+        ellipse at 10% 0%,
+        rgb(var(--color-primary) / 8%),
+        transparent 46%
+      ),
       linear-gradient(115deg, rgb(var(--color-primary) / 5%), transparent 42%),
       rgb(var(--color-card) / 58%);
     backdrop-filter: blur(26px);
@@ -476,5 +520,13 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+@keyframes shiny {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
   }
 }

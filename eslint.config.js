@@ -31,12 +31,4 @@ export default defineConfig([
   },
   // Must stay LAST so it overrides the rule sets above.
   // Vendored React Bits components: relax rules they were never written to satisfy.
-  {
-    files: ["app/components/**/*.{js,jsx}"],
-    rules: {
-      "react-hooks/refs": "off",
-      "no-empty": "off",
-      "@next/next/no-img-element": "off",
-    },
-  },
 ]);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
@@ -8,13 +8,9 @@ import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
 import Aurora from "../components/Aurora";
 import SplitText from "../components/SplitText";
 import DecryptedText from "../components/DecryptedText";
-import BlurText from "../components/BlurText";
-import Magnet from "../components/Magnet";
-import StarBorder from "../components/StarBorder";
-import ShinyText from "../components/ShinyText";
-import SpotlightCard from "../components/SpotlightCard";
 import CountUp from "../components/CountUp";
-import LogoLoop from "../components/LogoLoop";
+import Magnet from "../components/Magnet";
+import ShinyText from "../components/ShinyText";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -27,19 +23,24 @@ const pill =
 const descriptionClass =
   "mt-7 max-w-[34rem] text-pretty text-base leading-relaxed text-muted-foreground md:text-lg md:leading-8";
 
-/** JS-driven effects (GSAP, motion, rAF) can't use Tailwind's motion-safe:, so gate them here. */
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(callback) {
+  const query = window.matchMedia(REDUCED_MOTION_QUERY);
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
+/**
+ * JS-driven effects (GSAP, motion, rAF) can't use Tailwind's motion-safe:, so gate them here.
+ * useSyncExternalStore avoids setState-in-effect and renders the motion version on the server.
+ */
 function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
+  return useSyncExternalStore(
+    subscribeToReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
+  );
 }
 
 export default function Hero({ content }) {
@@ -51,53 +52,12 @@ export default function Hero({ content }) {
   ].filter((social) => social.href);
 
   const skills = content.skills ?? [];
-  const skillLogos = useMemo(
-    () =>
-      skills.map((skill) => ({
-        title: skill,
-        node: <span className={pill}>{skill}</span>,
-      })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [content.skills],
-  );
-
-  // Replaces the old "test" placeholder. Add `focusSentence` to your content, or edit the fallback.
 
   // "6+" -> number 6, suffix "+", so CountUp has something numeric to animate.
   const yearsRaw = String(content.yearsExperience ?? "");
   const yearsNumber = parseInt(yearsRaw, 10);
   const yearsSuffix = yearsRaw.replace(/^\d+/, "");
   const hasYearsNumber = Number.isFinite(yearsNumber);
-
-  const primaryCta = (
-    <a
-      href="#projects"
-      className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] ${focusRing}`}
-    >
-      View projects
-      <ArrowRight
-        aria-hidden="true"
-        className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
-      />
-    </a>
-  );
-
-  const contactCta = reduced ? (
-    <a href="#contact" className={ghostButton}>
-      Get in touch
-    </a>
-  ) : (
-    <StarBorder
-      as="a"
-      href="#contact"
-      color="#4ef2d2"
-      speed="7s"
-      thickness={1}
-      className={`rounded-full ${focusRing}`}
-    >
-      Get in touch
-    </StarBorder>
-  );
 
   return (
     <section
@@ -148,7 +108,7 @@ export default function Hero({ content }) {
               id="hero-heading"
               className="mt-6 text-balance text-[clamp(2.75rem,6.4vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.05em]"
             >
-              {/* Line 1: chars rise in. Wrapper span keeps it a block; pb stops SplitText's overflow-hidden clipping descenders. */}
+              {/* Line 1: chars rise in. The wrapper span keeps it a block; pb stops SplitText's overflow-hidden clipping descenders. */}
               <span className="block">
                 {reduced ? (
                   content.titleLead
@@ -170,7 +130,7 @@ export default function Hero({ content }) {
                 )}
               </span>
 
-              {/* Line 2: scrambles into place, left to right, keeping your gradient */}
+              {/* Line 2: scrambles into place, left to right, keeping the gradient */}
               <span className="block pb-[0.08em]">
                 {reduced ? (
                   <span className="text-gradient">{content.titleAccent}</span>
@@ -194,30 +154,27 @@ export default function Hero({ content }) {
               </span>
             </h1>
 
-            {reduced ? (
-              <p className={descriptionClass}>{content.description}</p>
-            ) : (
-              <BlurText
-                text={content.description}
-                animateBy="words"
-                direction="top"
-                delay={40}
-                className={descriptionClass}
-              />
-            )}
+            <p className={descriptionClass}>{content.description}</p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              {reduced ? (
-                primaryCta
-              ) : (
-                <Magnet padding={50} magnetStrength={5}>
-                  {primaryCta}
-                </Magnet>
-              )}
+              <Magnet strength={0.25}>
+                <a
+                  href="#projects"
+                  className={`group inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-[0_0_38px_rgb(var(--color-primary)/18%)] transition duration-300 hover:shadow-[0_0_48px_rgb(var(--color-primary)/32%)] ${focusRing}`}
+                >
+                  View projects
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
+                  />
+                </a>
+              </Magnet>
               <Link href="/home/cv" className={ghostButton}>
                 View CV
               </Link>
-              {contactCta}
+              <a href="#contact" className={ghostButton}>
+                Get in touch
+              </a>
             </div>
 
             {socials.length > 0 && (
@@ -287,63 +244,37 @@ export default function Hero({ content }) {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                {reduced ? (
-                  "Available for work"
-                ) : (
-                  <ShinyText text="Available for work" speed={3} />
-                )}
+                <ShinyText text="Available for work" speed={4} />
               </div>
             </div>
 
-            {/* Years badge: spotlight follows the cursor, number counts up on view */}
-            <div className="absolute -left-2 top-[18%] sm:-left-8">
-              <SpotlightCard
-                spotlightColor="rgba(78, 242, 210, 0.22)"
-                className="!rounded-2xl !border-white/10 !bg-background/80 !px-4 !py-3 shadow-xl backdrop-blur-xl"
-              >
-                <span className="text-gradient block text-3xl font-semibold leading-none tracking-tight">
-                  {hasYearsNumber && !reduced ? (
-                    <CountUp from={0} to={yearsNumber} duration={2} />
-                  ) : hasYearsNumber ? (
-                    yearsNumber
-                  ) : null}
-                  {hasYearsNumber ? yearsSuffix : content.yearsExperience}
-                </span>
-                <span className="mt-1.5 block text-xs text-muted-foreground">
-                  Years building
-                </span>
-              </SpotlightCard>
+            <div className="cyber-panel absolute -left-2 top-[18%] rounded-2xl !bg-background/80 px-4 py-3 shadow-xl backdrop-blur-xl sm:-left-8">
+              <span className="text-gradient block text-3xl font-semibold leading-none tracking-tight">
+                {hasYearsNumber ? (
+                  <CountUp from={0} to={yearsNumber} duration={2} />
+                ) : (
+                  content.yearsExperience
+                )}
+                {hasYearsNumber && yearsSuffix}
+              </span>
+              <span className="mt-1.5 block text-xs text-muted-foreground">
+                Years building
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Stack: infinite marquee, falls back to the static list for reduced motion */}
+        {/* Stack */}
         {skills.length > 0 && (
           <div className="mt-16 flex flex-col gap-4 border-t border-white/[0.08] pt-6 md:flex-row md:items-center md:gap-8 lg:mt-20">
             <p className="shrink-0 text-sm text-muted-foreground">Core stack</p>
-            <div className="min-w-0 flex-1">
-              {reduced ? (
-                <ul className="flex flex-wrap gap-2">
-                  {skills.map((skill, index) => (
-                    <li key={`${skill}-${index}`} className={pill}>
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <LogoLoop
-                  logos={skillLogos}
-                  speed={40}
-                  direction="left"
-                  logoHeight={32}
-                  gap={12}
-                  pauseOnHover
-                  fadeOut
-                  fadeOutColor="rgb(var(--color-background))"
-                  ariaLabel="Core stack"
-                />
-              )}
-            </div>
+            <ul className="flex flex-1 flex-wrap gap-2">
+              {skills.map((skill, index) => (
+                <li key={`${skill}-${index}`} className={pill}>
+                  {skill}
+                </li>
+              ))}
+            </ul>
             <a
               href="#about"
               aria-label="Scroll to About section"
